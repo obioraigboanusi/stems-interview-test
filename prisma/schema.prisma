@@ -1,0 +1,199 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id                Int                 @id @default(autoincrement())
+  username          String              @unique
+  auth_id           String              @unique
+  phone             String?
+  phoneVerified     Boolean             @default(false)
+  ArtistSubmissions ArtistSubmissions[]
+  Claim             Claim[]
+  Offer             Offer[]
+  Race              Race[]
+  Track             Track[]
+  UserLikes         UserLikes[]
+  UserShares        UserShares[]
+  UserPlayTime        UserPlayTime[]
+}
+
+model Race {
+  id           Int           @id @default(autoincrement())
+  uid          String        @unique @default(uuid())
+  userId       String?
+  name         String
+  description  String?
+  launches_on  DateTime?
+  published    Boolean       @default(false)
+  isExpired    Boolean?
+  Claim        Claim[]
+  user         User?         @relation(fields: [userId], references: [auth_id])
+  RaceSocials  RaceSocials?
+  RaceResults  RaceResults?
+  TokenTracker TokenTracker?
+  Track        Track[]
+  UserLikes    UserLikes[]
+  
+  @@index([uid])
+}
+
+model ArtistSubmissions {
+  id                       Int                       @id @default(autoincrement())
+  uid                      String                    @unique @default(uuid())
+  userId                   String?
+  name                     String
+  description              String?
+  published                Boolean                   @default(false)
+  user                     User?                     @relation(fields: [userId], references: [auth_id])
+  ArtistSubmissionsSocials ArtistSubmissionsSocials?
+  Track                    Track[]
+  UserLikes                UserLikes[]
+  bio                      String?
+  @@index([uid])
+}
+
+model Track {
+  id                  Int                @id @default(autoincrement())
+  uid                 String             @unique @default(uuid())
+  songUrl             String
+  userId              String?
+  uploaded_at         DateTime           @default(now())
+  name                String
+  raceId              String?
+  artist              String?
+  isDemo              Boolean?
+  isInspiration       Boolean            @default(false)
+  artistSubmissionId String?
+  isWinning           Boolean?
+  playedTime         Int                @default(0)
+  collaborators       Collaborator[]
+  offers              Offer[]
+  artistSubmission    ArtistSubmissions? @relation(fields: [artistSubmissionId], references: [uid])
+  race                Race?              @relation(fields: [raceId], references: [uid])
+  user                User?              @relation(fields: [userId], references: [auth_id])
+  UserLikes           UserLikes[]
+  UserShares          UserShares[]
+  UserPlayTime        UserPlayTime[]
+  RaceResults         RaceResults?
+  points              Int                @default(0)
+  @@index([uid])
+}
+
+model Collaborator {
+  id          Int    @id @default(autoincrement())
+  trackId     String
+  name        String
+  phoneNumber String
+  track       Track  @relation(fields: [trackId], references: [uid])
+}
+
+model Offer {
+  id          Int    @id @default(autoincrement())
+  userId      String
+  trackId     String
+  name        String
+  phoneNumber String
+  description String?
+  track       Track  @relation(fields: [trackId], references: [uid])
+  User        User   @relation(fields: [userId], references: [auth_id])
+
+}
+
+model UserLikes {
+  id                 Int                @id @default(autoincrement())
+  active             Boolean            @default(true)
+  hidden             Boolean?
+  timestamp          DateTime           @default(now())
+  userId             String?
+  trackId            String
+  raceId             String?
+  artistSubmissionId String?
+  artistSubmission   ArtistSubmissions? @relation(fields: [artistSubmissionId], references: [uid])
+  race               Race?              @relation(fields: [raceId], references: [uid])
+  track              Track              @relation(fields: [trackId], references: [uid])
+  user               User?              @relation(fields: [userId], references: [auth_id])
+  @@unique([userId, trackId])
+}
+
+model UserShares {
+  id                 Int                @id @default(autoincrement())
+  timestamp          DateTime           @default(now())
+  userId             String?
+  trackId            String
+  track              Track              @relation(fields: [trackId], references: [uid])
+  user               User?              @relation(fields: [userId], references: [auth_id])
+  @@unique([userId, trackId])
+}
+model UserPlayTime {
+  id                 Int                @id @default(autoincrement())
+  userId             String?
+  trackId            String
+  track              Track              @relation(fields: [trackId], references: [uid])
+  playTime           Int                @default(0)
+  user               User?              @relation(fields: [userId], references: [auth_id])
+  @@unique([userId, trackId])
+}
+
+model RaceSocials {
+  id           Int     @id @default(autoincrement())
+  imageUrl     String?
+  spotifyUrl   String?
+  twitterUrl   String?
+  instagramUrl String?
+  raceId       String  @unique
+  race         Race    @relation(fields: [raceId], references: [uid])
+}
+model RaceResults {
+  id           Int     @id @default(autoincrement())
+  NftImageUrl  String?
+  streamUrl    String?
+  soundUrl     String?
+  openSeaUrl   String?
+  trackId      String? @unique
+  raceId       String  @unique
+  releasedSong Track?  @relation(fields: [trackId], references: [uid])
+  race         Race    @relation(fields: [raceId], references: [uid])
+}
+
+model ArtistSubmissionsSocials {
+  id                 Int               @id @default(autoincrement())
+  imageUrl           String?
+  spotifyUrl         String?
+  twitterUrl         String?
+  instagramUrl       String?
+  geniusUrl          String?
+  artistSubmissionId String            @unique
+  artistSubmission   ArtistSubmissions @relation(fields: [artistSubmissionId], references: [uid])
+}
+
+model Claim {
+  id           Int      @id @default(autoincrement())
+  uid          String   @unique @default(uuid())
+  userId       String
+  raceId       String
+  uploaded_at  DateTime @default(now())
+  eligible     Boolean
+  claimed      Boolean  @default(false)
+  tx           String?
+  openseaUrl   String?
+  tokenNumber  Int?
+  etherscanUrl String?
+  soundUrl     String?
+  Race         Race     @relation(fields: [raceId], references: [uid])
+  User         User     @relation(fields: [userId], references: [auth_id])
+  @@index([uid])
+}
+
+model TokenTracker {
+  id     Int    @id @default(autoincrement())
+  raceId String @unique
+  number Int    @default(0)
+  Race   Race   @relation(fields: [raceId], references: [uid])
+}

@@ -1,0 +1,43 @@
+.track {
+  animation: moveArt 20s linear infinite;
+}
+
+.highlightText {
+  color: transparent;
+  background-image: linear-gradient(
+    129.85deg,
+    #f8f7fd 0%,
+    #f8f7fd 25%,
+    #927ff5 34.55%,
+    #6587fd 73.91%,
+    #f8f7fd 75%,
+    #f8f7fd 100%
+  );
+  background-size: 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: highlightTextAnimation 3s linear infinite;
+}
+
+@keyframes moveArt {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-135%);
+  }
+}
+
+@keyframes highlightTextAnimation {
+  0% {
+    background-position: 0%;
+  }
+
+  50% {
+    background-position: 60%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
