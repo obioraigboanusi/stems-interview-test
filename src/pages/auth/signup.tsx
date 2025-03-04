@@ -22,35 +22,9 @@ const SignUp: NextLayoutPage = (props) => {
 
   const [showPreview, setShowPreview] = useState(false);
   const [step, setStep] = useState(1);
-  const [usernameExists, setUsernameExists] = useState(false);
 
   const handleFormChange = async (newFormState: typeof formState) => {
-    // console.log("Form state changed:", newFormState);
     setFormState(newFormState);
-
-    if (newFormState.url) {
-      const exists = await doesUsernameExist(newFormState.inputVal_uid);
-      console.log("exists", exists);
-      setUsernameExists(exists);
-    }
-  };
-
-  const doesUsernameExist = async (inputVal_uid: string): Promise<boolean> => {
-    // console.log(
-    //   "Checking if username exists: HSDJKHFSPIODUHFPIEU",
-    //   inputVal_uid
-    // );
-    const { data, error } = await supabase
-      .from("ArtistSubmissions")
-      .select("uid")
-      .eq("uid", inputVal_uid);
-
-    if (error) {
-      console.error("Error checking inputVal_uid:", error);
-      return false;
-    }
-
-    return data.length > 0;
   };
 
   const handleStepChange = (newStep: number) => {
@@ -79,7 +53,6 @@ const SignUp: NextLayoutPage = (props) => {
               togglePreview={togglePreview}
               step={step}
               onStepChange={handleStepChange}
-              usernameExists={usernameExists} // Pass the usernameExists state
             />
           )}
         </div>

@@ -3,7 +3,6 @@ import GeniusIcon from "../../../public/logos/genius.svg";
 import InstagramIcon from "../../../public/logos/instagram.svg";
 import SpotifyIcon from "../../../public/logos/spotify.svg";
 import TwitterIcon from "../../../public/logos/x.svg";
-import supabase from "../../../utils/supabase";
 import Button from "../shared/button";
 import Modal from "../shared/modal";
 import AvatarUploader from "../upload/avatarUploader";
@@ -22,7 +21,6 @@ export default function Register({
   togglePreview,
   step,
   onStepChange,
-  usernameExists,
 }: any) {
   const router = useRouter();
   const { url: initialUrl } = router.query;
@@ -102,7 +100,7 @@ export default function Register({
     imageUrl,
     step,
   ]);
-  console.log({ isUsernameExists });
+
   const checkUsernameExists = useCallback(
     debounce(async (username: string) => {
       if (!username) return;
@@ -148,9 +146,7 @@ export default function Register({
   }, [imageUrl]);
 
   const handleContinueClick = () => {
-    console.log("Button clicked", usernameExists);
-
-    if (usernameExists) {
+    if (isUsernameExists) {
       // setShowModal(true); // Show modal if username doesn't exist
       showMessage(true);
       return;
