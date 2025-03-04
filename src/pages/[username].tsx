@@ -11,7 +11,7 @@ export const getServerSideProps: GetServerSideProps = async (
   const { data: user } = await axios.get(
     `${process.env.NEXT_PUBLIC_API_URL}/api/artist-submissions/${username}`
   );
-  console.log({ username, user });
+
   if (!user) {
     return { notFound: true };
   }
