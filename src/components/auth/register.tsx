@@ -15,6 +15,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { IoIosCheckmark } from "react-icons/io";
 import { MdClear } from "react-icons/md";
 
+
 export default function Register({
   formState,
   onFormChange,
@@ -117,14 +118,15 @@ export default function Register({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(initialValue, "");
     setInputValue(value);
-    checkUsernameExists(value);
+   
   };
 
   useEffect(() => {
+    checkUsernameExists(inputValue);
     return () => {
       checkUsernameExists.cancel();
     };
-  }, [checkUsernameExists]);
+  }, [checkUsernameExists, inputValue]);
 
   // const validateUrl = (value: string) => {
   //   const regex = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
