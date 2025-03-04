@@ -8,9 +8,11 @@ import Button from "../shared/button";
 import Modal from "../shared/modal";
 import AvatarUploader from "../upload/avatarUploader";
 import { trpc } from "@utils/trpc";
+import axios from "axios";
+import { debounce } from "lodash";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { IoIosCheckmark } from "react-icons/io";
 import { MdClear } from "react-icons/md";
 
@@ -42,6 +44,7 @@ export default function Register({
   const [imageUrl, setImageUrl] = useState(formState?.imageUrl || "");
   const [allFilled, setAllFilled] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isUsernameExists, setIsUsernameExists] = useState(false);
 
   const [showModal, setShowModal] = useState(false);
   const [message, showMessage] = useState(false);
@@ -99,25 +102,36 @@ export default function Register({
     imageUrl,
     step,
   ]);
+  console.log({ isUsernameExists });
+  const checkUsernameExists = useCallback(
+    debounce(async (username: string) => {
+      if (!username) return;
+      try {
+        const response = await axios.get(`/api/artist-submissions/${username}`);
+        setIsUsernameExists(true);
+      } catch (error) {
+        setIsUsernameExists(false);
+      }
+    }, 500),
+    []
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(initialValue, "");
     setInputValue(value);
-    //validateUrl(initialValue + value);
-
-    console.log("Checking URL:", value); // Log the full URL being checked
-
-    // Debounce the URL check to avoid too many requests
-    // if (urlCheckTimeout.current) clearTimeout(urlCheckTimeout.current);
-    // urlCheckTimeout.current = setTimeout(() => {
-    //   urlCheckMutation.refetch();
-    // }, 300);
+    checkUsernameExists(value);
   };
 
-  const validateUrl = (value: string) => {
-    const regex = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
-    setIsValid(regex.test(value));
-  };
+  useEffect(() => {
+    return () => {
+      checkUsernameExists.cancel();
+    };
+  }, [checkUsernameExists]);
+
+  // const validateUrl = (value: string) => {
+  //   const regex = /^https?:\/\/[^\s/$.?#].[^\s]*$/i;
+  //   setIsValid(regex.test(value));
+  // };
 
   const handleUpload = async (file: File, previewUrl: string) => {
     try {
@@ -264,18 +278,18 @@ export default function Register({
                 {JSON.stringify(urlCheckMutation.error, null, 2)}
               </p>
             )} */}
-            {inputValue && !usernameExists ? (
-              <a
-                href="#"
+            {inputValue && !isUsernameExists ? (
+              <span
+                // href="#"
                 className={`p-.5 text-white rounded-full ${
                   isValid ? "bg-primary" : "bg-green-500"
                 }`}
               >
                 <IoIosCheckmark size={24} />
-              </a>
+              </span>
             ) : (
-              <a
-                href="#"
+              <span
+                // href="#"
                 className="hidden md:block p-1 text-white rounded-full"
                 style={{
                   background:
@@ -283,7 +297,7 @@ export default function Register({
                 }}
               >
                 <MdClear size={18} />
-              </a>
+              </span>
             )}
           </div>
         </div>
