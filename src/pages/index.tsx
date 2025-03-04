@@ -8,7 +8,7 @@
 // } from '@heroicons/react/20/solid';
 // import { useRelativeTime } from '@hooks/use-relative-time';
 // import useWindowSize from '@hooks/use-window-size';
-// import { Inter } from '@next/font/google';
+// import { Inter } from 'next/font/google';
 // import * as Progress from '@radix-ui/react-progress';
 // import { appRouter } from '@server/_app';
 // import { createContext } from '@server/context';

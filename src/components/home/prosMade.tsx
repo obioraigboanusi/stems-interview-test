@@ -135,7 +135,7 @@ export default function ProMade() {
                   />
                   <button
                     onClick={() => togglePlay(item.audio)}
-                    className='p-0 absolute left-[50%] md:left-6 bottom-[50%] transform translate-x-[-50%] md:translate-x-auto translate-y-[50%] md:translate-y-auto md:bottom-6 flex items-center justify-center rounded-full bg-[#ffffff59] md:bg-white text-primary h-[44px] w-[44px] z-[100] transition-colors ease-in-out duration-[400ms] hover:text-white hover:bg-primary'>
+                    className='p-0 absolute left-[50%] md:left-6 bottom-[50%] transform translate-x-[-50%] md:translate-x-auto translate-y-[50%] md:translate-y-auto md:bottom-6 flex items-center justify-center rounded-full bg-[#ffffff59] md:bg-white text-primary h-[44px] w-[44px] z-[100] transition-colors ease-in-out duration-300 hover:text-white hover:bg-primary'>
                     {currentAudio === item.audio &&
                     !audioRef.current?.paused ? (
                       <IoIosPause size={30} />

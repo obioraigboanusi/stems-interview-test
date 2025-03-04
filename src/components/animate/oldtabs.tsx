@@ -57,10 +57,10 @@ export default function Tabs() {
                 key={index}
                 onClick={() => setActiveTab(index)}
                 type='button'
-                className={`text-[24px] font-PPPangramSans  hover:font-[500] min-w-[223px] hover:bg-[#F8F7FD] hover:text-black transition-colors ease-in-out duration-[400ms]  shadow-2xl shadow-[#5d3eff4d]  rounded-lg px-5 py-2.5 text-center me-2 mb-2 ${
+                className={`text-[24px] font-PPPangramSans  hover:font-medium min-w-[223px] hover:bg-[#F8F7FD] hover:text-black transition-colors ease-in-out duration-300 shadow-2xl shadow-[#5d3eff4d]  rounded-lg px-5 py-2.5 text-center me-2 mb-2 ${
                   activeTab === index
-                    ? 'text-black bg-[#F8F7FD] font-[500]'
-                    : 'text-white bg-[#f8f7fd33] font-[500]'
+                    ? 'text-black bg-[#F8F7FD] font-medium'
+                    : 'text-white bg-[#f8f7fd33] font-medium'
                 }`}>
                 {tab.name}
               </button>
@@ -86,7 +86,7 @@ export default function Tabs() {
                     </React.Fragment>
                   ))}
               </h2>
-              <p className='text-[18px] font-PPPangramSans font-[500] mb-10'>
+              <p className='text-[18px] font-PPPangramSans font-medium mb-10'>
                 {tabs[activeTab].content.details}
               </p>
               <button

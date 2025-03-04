@@ -46,7 +46,7 @@
 //           </h1>
 //         </MotionInView>
 //         <MotionInView variants={varFadeInUp}>
-//           <p className='text-[13px] md:text-[26px]  font-[500]'>
+//           <p className='text-[13px] md:text-[26px]  font-medium'>
 //             Set up your page to source and review new beats
 //           </p>
 //         </MotionInView>
@@ -166,7 +166,7 @@ export default function Hero() {
           </h1>
         </MotionInView>
         <MotionInView variants={varFadeInUp}>
-          <p className='text-[13px] md:text-[26px] font-[500]'>
+          <p className='text-[13px] md:text-[26px] font-medium'>
             Set up your page to source new beats
           </p>
         </MotionInView>

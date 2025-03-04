@@ -48,8 +48,7 @@ const SuccessfullyClaimedPopUp = () => {
         Successfully Claimed NFT!
       </h3>
       <p className="text-sm text-center mt-2">
-        {" "}
-        Proof that you sourced Xcelencia's next hit 🔥
+        Proof that you sourced Xcelencia&apos;s next hit 🔥
       </p>
 
       <div className="mt-4 text-sm font-normal text-white text-center">
@@ -91,7 +90,7 @@ const SuccessfullyClaimedPopUp = () => {
           <a
             href={claim.etherscanUrl}
             className="text-sm cursor-pointer underline hover:text-vibrant hover:underline-vibrant"
-            target="_blank"
+            target="_blank" rel="noreferrer"
           >
             Transaction Details
           </a>

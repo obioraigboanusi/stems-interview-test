@@ -139,10 +139,10 @@ export default function Tabs() {
                     key={index}
                     onClick={() => handleButtonClick(index)}
                     type='button'
-                    className={`text-[12px] md:text-[24px]  hover:font-[500] lg:min-w-[223px] hover:bg-[#F8F7FD] hover:text-black transition-colors ease-in-out duration-[400ms]  rounded-lg px-3 py-1.5 md:px-5 md:py-2.5 text-center  ${
+                    className={`text-[12px] md:text-[24px]  hover:font-medium lg:min-w-[223px] hover:bg-[#F8F7FD] hover:text-black transition-colors ease-in-out duration-300  rounded-lg px-3 py-1.5 md:px-5 md:py-2.5 text-center  ${
                       activeTab === index
-                        ? 'text-black bg-[#F8F7FD] font-[500]'
-                        : 'text-white bg-[#f8f7fd33] font-[500]'
+                        ? 'text-black bg-[#F8F7FD] font-medium'
+                        : 'text-white bg-[#f8f7fd33] font-medium'
                     }`}
                     style={{
                       boxShadow: ' 0px 2px 28px 5px #5D3EFF4D',
@@ -179,7 +179,7 @@ export default function Tabs() {
                   </h2>
                 </MotionInView>
                 <MotionInView variants={varFadeInUp}>
-                  <p className='text-[10px] md:text-[18px]  font-[500] mb-10'>
+                  <p className='text-[10px] md:text-[18px]  font-medium mb-10'>
                     {tab.content.details}
                   </p>
                 </MotionInView>
