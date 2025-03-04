@@ -3,24 +3,21 @@ import {
   varFadeInRight,
   varFadeInLeft,
   varFadeInDown,
-} from '../animate';
-import Image from 'next/image';
-import React from 'react';
-import { HiOutlineArrowNarrowRight } from 'react-icons/hi';
-import { HiOutlineArrowNarrowLeft } from 'react-icons/hi';
-import Slider from 'react-slick';
+} from "../animate";
+import Image from "next/image";
+import React from "react";
+import { HiOutlineArrowNarrowRight } from "react-icons/hi";
+import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
+import SlickSlider, { Settings } from "react-slick";
+
+const Slider: any = SlickSlider;
 
 function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
   return (
     <MotionInView variants={varFadeInRight}>
-      <div
-        className={className}
-        onClick={onClick}>
-        <HiOutlineArrowNarrowRight
-          size={36}
-          className='text-primary'
-        />
+      <div className={className} onClick={onClick}>
+        <HiOutlineArrowNarrowRight size={36} className="text-primary" />
       </div>
     </MotionInView>
   );
@@ -30,20 +27,15 @@ function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
   return (
     <MotionInView variants={varFadeInLeft}>
-      <div
-        className={className}
-        onClick={onClick}>
-        <HiOutlineArrowNarrowLeft
-          size={36}
-          className='text-primary'
-        />
+      <div className={className} onClick={onClick}>
+        <HiOutlineArrowNarrowLeft size={36} className="text-primary" />
       </div>
     </MotionInView>
   );
 }
 
 export default function OurCustomers() {
-  const settings = {
+  const settings: Settings = {
     dots: false,
     infinite: true,
     slidesToShow: 1,
@@ -52,18 +44,16 @@ export default function OurCustomers() {
     prevArrow: <SamplePrevArrow />,
   };
   return (
-    <section className='relative overflow-hidden py-6 md:py-20 '>
-      <div className='container mx-auto'>
-        <div className='text-start mb-10'>
+    <section className="relative overflow-hidden py-6 md:py-20 ">
+      <div className="container mx-auto">
+        <div className="text-start mb-10">
           <MotionInView variants={varFadeInRight}>
-            <h1 className='text-primary font-PPPangramSans text-[24px] md:text-[72px] font-[600]'>
+            <h1 className="text-primary font-PPPangramSans text-[24px] md:text-[72px] font-[600]">
               What users say
             </h1>
           </MotionInView>
         </div>
-        <Slider
-          className='mt-10 md:mt-20 pb-20'
-          {...settings}>
+        <Slider className="mt-10 md:mt-20 pb-20" {...settings}>
           {[
             {
               id: 1,
@@ -78,28 +68,26 @@ export default function OurCustomers() {
               image: "/assets/Othello_400x400.jpg",
             },
           ].map((item) => (
-            <div
-              key={item.id}
-              className='relative'>
-              <p className='text-[14.02px] font-PPPangramSans  md:text-[36px] text-center'>
+            <div key={item.id} className="relative">
+              <p className="text-[14.02px] font-PPPangramSans  md:text-[36px] text-center">
                 {item.text}
               </p>
               <MotionInView variants={varFadeInLeft}>
-                <div className='flex items-center justify-center gap-4 mt-6'>
-                  <div className='relative rounded-full h-[40px] md:h-[96px] w-[40px] md:w-[96px]'>
+                <div className="flex items-center justify-center gap-4 mt-6">
+                  <div className="relative rounded-full h-[40px] md:h-[96px] w-[40px] md:w-[96px]">
                     <Image
-                      className=' rounded-full'
+                      className=" rounded-full"
                       src={item.image}
-                      alt='avatar'
+                      alt="avatar"
                       fill
-                      sizes='100vw'
-                      placeholder='blur'
-                      objectFit='cover'
+                      sizes="100vw"
+                      placeholder="blur"
+                      objectFit="cover"
                       blurDataURL={item.image}
                     />
                   </div>
 
-                  <div className='text-[16.02px] font-PPPangramSans text-primary md:text-[36px]'>
+                  <div className="text-[16.02px] font-PPPangramSans text-primary md:text-[36px]">
                     <div>{item.name}</div>
                   </div>
                 </div>
