@@ -11,7 +11,7 @@ export default async function handler(
     const artistSubmission = await prisma.artistSubmissions.findUniqueOrThrow({
       where: { uid: username as string },
     });
-    return res.status(200).json({ success: true, data: artistSubmission });
+    return res.status(200).json({ ...artistSubmission });
   } catch (error) {
     return res
       .status(404)

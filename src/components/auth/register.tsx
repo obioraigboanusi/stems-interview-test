@@ -15,7 +15,6 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { IoIosCheckmark } from "react-icons/io";
 import { MdClear } from "react-icons/md";
 
-
 export default function Register({
   formState,
   onFormChange,
@@ -106,7 +105,7 @@ export default function Register({
     debounce(async (username: string) => {
       if (!username) return;
       try {
-        const response = await axios.get(`/api/artist-submissions/${username}`);
+        await axios.get(`/api/artist-submissions/${username}`);
         setIsUsernameExists(true);
       } catch (error) {
         setIsUsernameExists(false);
@@ -118,7 +117,6 @@ export default function Register({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(initialValue, "");
     setInputValue(value);
-   
   };
 
   useEffect(() => {
